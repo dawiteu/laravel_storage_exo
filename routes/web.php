@@ -24,3 +24,5 @@ Route::get('/admin', function(){
 
 Route::get('/admin/show/fichiers', [FichierController::class,'index'])->name('ad.show.fichiers'); 
 Route::post('/admin/store/fichiers', [FichierController::class,'store'])->name('ad.store.fichiers');
+
+Route::delete('/admin/del/fichier/{id}', [FichierController::class,'destroy'])->name('ad.del.fichiers');

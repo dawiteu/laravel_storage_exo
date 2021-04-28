@@ -28,4 +28,11 @@ class FichierController extends Controller
 
         return redirect()->route('admin.home');
     }
+
+    public function destroy(Fichier $id){
+        //dd($id);
+        Storage::delete($id);
+        $id->delete();
+        return redirect()->route('ad.show.fichiers');
+    }
 }
