@@ -34,17 +34,16 @@
         @if ($fichiers->count() > 0)
             @foreach ($fichiers as $file)
 
-                @if (Str::contains($file->name, '://'))
+                @if (Str::contains(base64_decode($file->name), '://'))
                     <div class="col-3 m-1">
-                        <img class="img-fluid" src="{{$file->name}}" alt="abc" /> 
+                        <img class="img-fluid" src="{{asset(base64_decode($file->name))}}" alt="abc" /> 
                         <form action={{route('ad.del.fichiers', $file->id) }} method="POST">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger">DEL</button>
                         </form>
                     </div>
-                @else 
-
+                @else  
                     @if (in_array(Str::after($file->name, '.'), $allowed))
                         <div class="col-3 m-1">
                             <img class="img-fluid" src="{{ asset('/storage/img/' . $file->name) }}" alt="abc" /> 
