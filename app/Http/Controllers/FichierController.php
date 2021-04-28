@@ -17,13 +17,15 @@ class FichierController extends Controller
 
     public function store(Request $request){ 
         //dd($request->file('name')); 
-        Storage::put('public/img/', $request->file('name')); 
-
         $file = new Fichier(); 
 
-        $file->name = $request->file('name')->hashName(); 
-        //$file->type = explode(".", $file->name); 
 
+        if($request->hasFile('name')){
+            Storage::put('public/img/', $request->file('name'));
+            $file->name = $request->file('name')->hashName(); 
+        }else{
+            $file->name = $request->filename; 
+        }   
         $file->save(); 
 
         return redirect()->route('admin.home');
