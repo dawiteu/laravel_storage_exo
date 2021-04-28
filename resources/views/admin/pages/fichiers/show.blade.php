@@ -24,8 +24,15 @@
                         </form>
                     </div>
                     @else
-                    <p>Fichier non image: <br/> 
-                        {{Str::after($file->name, '.') }} extention non reconue.</p>  
+                    <div class="col-3 m-1">
+                        Fichier non image: <br/> 
+                        {{Str::after($file->name, '.') }} extention non reconue.</p>
+                        <form action={{route('ad.del.fichiers', $file->id) }} method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger">DEL</button>
+                        </form>
+                    </div>
                 @endif
             @endforeach
             </div>
