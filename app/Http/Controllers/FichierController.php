@@ -50,7 +50,29 @@ class FichierController extends Controller
         return redirect()->route('ad.show.fichiers');
     }
 
-    public function update(Fichier $file, Request $request){
+    public function edit(Fichier $id){
+    $file = $id;
+    return view('admin.pages.fichiers.edit', compact('file')); 
+    }
+
+    public function update(Fichier $id, Request $request){
+        $file = $id; 
         
+        if($request->hasFile('newfilename')){
+            Storage::delete('public/img/'.$file->name);
+            Storage::put('public/img/', $request->file('newfilename'));
+            $file->name = $request->file('newfilename')->hashName(); 
+        }else if($request->newfiletext != null){
+            $remoteImage = $request->newfiletext;
+            $content = file_get_contents($remoteImage); 
+            $end = Str::afterLast($remoteImage, '.'); 
+            $uniquename = uniqid().".".$end; 
+            Storage::put("public/img/".$uniquename, $content); 
+            $file->name = $uniquename; 
+        }else{
+            exit('erreur.. champs vides'); 
+        }
+        $file->save(); 
+        return redirect()->route('ad.show.fichiers');
     }
 }

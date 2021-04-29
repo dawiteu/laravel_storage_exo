@@ -10,7 +10,7 @@
             <div class="col-12 text-center"><h3>Ajouter une images: </h3></div>
 
                 <div class="col-4">
-                    <label for="link">Lien vers l'image:</label>
+                    <label for="filename">Lien vers l'image:</label>
                 </div>
 
                 <div class="col-8">
@@ -38,7 +38,7 @@
                     <div class="col-3 m-1">
                         <img class="img-fluid" src="{{asset($file->name)}}" alt="abc" /> 
                         <a href="#"><button class="btn btn-warning">edit</button></a>
-                        <form action={{route('ad.del.fichiers', $file->id) }} method="POST">
+                        <form action={{route('ad.del.fichiers', $file->id) }} method="POST" class='d-inline'>
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger">DEL</button>
@@ -48,8 +48,8 @@
                     @if (in_array(Str::after($file->name, '.'), $allowed))
                         <div class="col-3 m-1">
                             <img class="img-fluid" src="{{ asset('/storage/img/' . $file->name) }}" alt="abc" /> 
-                            <a href="#"><button class="btn btn-warning">edit</button></a>
-                            <form action={{route('ad.del.fichiers', $file->id) }} method="POST">
+                            <a href={{route('ad.edit.fichiers', $file->id)}}><button class="btn btn-warning">edit</button></a>
+                            <form action={{route('ad.del.fichiers', $file->id) }} method="POST" class='d-inline'>
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger">DEL</button>
