@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Fichier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class FichierController extends Controller
@@ -24,16 +25,17 @@ class FichierController extends Controller
             Storage::put('public/img/', $request->file('name'));
             $file->name = $request->file('name')->hashName(); 
         }else{
-            //dd("teest");
-            $remoteImage = $request->filename;
 
+            $remoteImage = $request->filename;
             $content = file_get_contents($remoteImage); 
 
-            Storage::put("public/img/".base64_encode($request->filename), $content); 
+            $end = Str::afterLast($remoteImage, '.'); 
 
-            $file->name = base64_encode($request->filename); 
+            $uniquename = uniqid().".".$end; 
 
+            Storage::put("public/img/".$uniquename, $content); 
 
+            $file->name = $uniquename; 
 
 
             //dd(Storage::allDirectories('/public/img/'));
@@ -91,12 +93,12 @@ class FichierController extends Controller
          
         $file->save(); 
 
-        return redirect()->route('admin.home');
+        return redirect()->route('ad.show.fichiers');
     }
 
     public function destroy(Fichier $id){
-        //dd($id);
-        Storage::delete($id);
+        //dd($id->name);
+        Storage::delete("public/img/".$id->name);
         $id->delete();
         return redirect()->route('ad.show.fichiers');
     }

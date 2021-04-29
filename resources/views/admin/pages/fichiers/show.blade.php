@@ -36,7 +36,7 @@
 
                 @if (Str::contains(base64_decode($file->name), '://'))
                     <div class="col-3 m-1">
-                        <img class="img-fluid" src="{{asset(base64_decode($file->name))}}" alt="abc" /> 
+                        <img class="img-fluid" src="{{asset($file->name)}}" alt="abc" /> 
                         <form action={{route('ad.del.fichiers', $file->id) }} method="POST">
                             @csrf
                             @method('DELETE')
