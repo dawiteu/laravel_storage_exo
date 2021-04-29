@@ -37,6 +37,7 @@
                 @if (Str::contains(base64_decode($file->name), '://'))
                     <div class="col-3 m-1">
                         <img class="img-fluid" src="{{asset($file->name)}}" alt="abc" /> 
+                        <a href="#"><button class="btn btn-warning">edit</button></a>
                         <form action={{route('ad.del.fichiers', $file->id) }} method="POST">
                             @csrf
                             @method('DELETE')
@@ -47,6 +48,7 @@
                     @if (in_array(Str::after($file->name, '.'), $allowed))
                         <div class="col-3 m-1">
                             <img class="img-fluid" src="{{ asset('/storage/img/' . $file->name) }}" alt="abc" /> 
+                            <a href="#"><button class="btn btn-warning">edit</button></a>
                             <form action={{route('ad.del.fichiers', $file->id) }} method="POST">
                                 @csrf
                                 @method('DELETE')
